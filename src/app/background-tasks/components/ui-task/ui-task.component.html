@@ -1,0 +1,22 @@
+<div *ngIf="taskMessage$ | async as message">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div>{{ message.taskId }}</div>
+      <div>{{ message.progress.progressPercent }}% ({{ message.progress.doneJobs }} / {{ message.progress.totalJobs }})</div>
+      <div>{{ message.taskStatus }}</div>
+      <div>
+          <button mat-icon-button color='primary' (click)="pause()" *ngIf="canPause(message.taskStatus)">
+            <mat-icon aria-label="pause">pause</mat-icon>
+          </button>
+          <button mat-icon-button color='primary' (click)="resume()"  *ngIf="canResume(message.taskStatus)">
+            <mat-icon aria-label="resume">play_arrow</mat-icon>
+          </button>
+          <button mat-icon-button color='warn' (click)="stop()" *ngIf="canStop(message.taskStatus)">
+            <mat-icon aria-label="stop">stop</mat-icon>
+          </button>
+          <button mat-icon-button color='primary' (click)="start()" *ngIf="canReplay(message.taskStatus)">
+              <mat-icon aria-label="replay">replay</mat-icon>
+          </button>
+      </div>
+  </div>
+  <mat-progress-bar mode="determinate" [value]="message.progress.progressPercent"></mat-progress-bar>
+</div>
